@@ -71,7 +71,7 @@ if __name__ == '__main__':
         factory = MyClientFactory(settings['url'])
         factory.protocol = MyClientProtocol
         factory.setProtocolOptions(autoPingInterval=settings.get('ping_interval', 30),
-                                   autoPingTimeout=settings.get('ping_timeout', 30))
+                                   autoPingTimeout=settings.get('ping_timeout', 3))
     except Exception as e:
         logger.error(e)
         exit()
