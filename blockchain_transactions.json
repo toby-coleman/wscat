@@ -1,0 +1,4 @@
+{
+  "url": "wss://ws.blockchain.info/inv",
+  "connect_message": "{\"op\":\"unconfirmed_sub\"}"
+}
