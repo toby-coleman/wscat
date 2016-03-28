@@ -5,6 +5,7 @@ import json
 import sys
 import os
 import logging
+from logging.handlers import TimedRotatingFileHandler
 
 logger = logging.getLogger(__name__)
 
@@ -64,8 +65,21 @@ if __name__ == '__main__':
         with open(settings_file, 'r') as data_file:
             settings = json.load(data_file)
     except Exception as e:
-        logger.error('Unable to load settings file: {0}', e)
+        logger.error('Unable to load settings file: {0}'.format(e))
         exit()
+
+    log_level = logging.getLevelName(settings.get('log_level', 'ERROR').upper())
+    logger.setLevel(log_level)
+    if settings.get('log_file', None):
+        # Set up logging to file
+        log_path, log_file = os.path.split(settings['log_file'])
+        if log_path and not os.path.exists(log_path):
+            os.makedirs(log_path)
+        fh = TimedRotatingFileHandler(settings['log_file'], 'D', 1, 7)
+        fmt = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s: %(message)s')
+        fh.setFormatter(fmt)
+        fh.setLevel(log_level)
+        logger.addHandler(fh)
 
     try:
         factory = MyClientFactory(settings['url'])

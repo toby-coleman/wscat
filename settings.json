@@ -1,4 +1,6 @@
 {
   "url": "ws://echo.websocket.org",
-  "connect_message": "Hello!!!"
+  "connect_message": "Hello!!!",
+  "log_file": "logs/testing.log",
+  "log_level": "info"
 }
