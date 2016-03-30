@@ -6,9 +6,11 @@ import sys
 import os
 import logging
 from logging.handlers import TimedRotatingFileHandler
+from signal import signal, SIGPIPE, SIG_DFL
 
 logger = logging.getLogger(__name__)
-
+# Don't create broken pipe errors
+signal(SIGPIPE, SIG_DFL)
 
 class MyClientProtocol(WebSocketClientProtocol):
 
